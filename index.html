@@ -9,19 +9,29 @@
   
 
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
+  <script src="https://www.gstatic.com/firebasejs/4.11.0/firebase.js"></script>
   <title>project 1</title>
 </head>
 
 <body>
-  <button data-synonym="car" id="word-input">I'll be back</button>
+  
+  
+    <form id="imgForm" action="/action_page.php">
+      Image URL
+      <input type="text" name="imgurl" id="imgurl">
+      <br>
+      <input type="button" onclick="ajaxCall()" value="Upload Url" id= "formSubmit">
+  </form>
+  
+  <br>
+
   <!--rendered buttons will fill in here-->
-  <div id="buttons-view"></div>
+  <div id="buttons-view" id="addsyntogif"  ></div>
 
   <div id="gifs-appear-here">
   </div>
 
-  
+
   <script type="text/javascript" src="./assets/first2logic.js"></script>
   
 </body>
