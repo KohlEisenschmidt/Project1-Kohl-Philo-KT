@@ -9,6 +9,16 @@ $(document).ready(function () {
     };
     firebase.initializeApp(config);
 
+    var database = firebase.database();
+
+         database.ref().orderByChild("dateAdded").limitToLast(1).on("child_added", function(snapshot) {
+            console.log(snapshot.val());
+            $("#theImg2").attr('src', snapshot.val().imagetofirebase);
+
+        }, function(errorObject) {
+            console.log("Errors handled: " + errorObject.code);
+          });
+
     var API_URL = "https://api-us.faceplusplus.com/facepp/v3/detect";
     var API_KEY = "yOD8xeqc_2sZRuMQuL1zfKvce-MRAIwI";
     var API_SECRET = "SvehIfbpXzUXjvYBCqkiwhjwWukLQJs3";
@@ -17,6 +27,14 @@ $(document).ready(function () {
     $("#imgForm").on('submit', function () {
         event.preventDefault();
         var image_url = $("#imgurl").val().trim()
+
+        database.ref().push({
+            imagetofirebase: image_url,
+            dateAdded: firebase.database.ServerValue.TIMESTAMP
+        })
+
+        $('#theImg').attr('src', image_url)
+        // $('#theImg2').attr('src', image_url)
         identifyEmotion(image_url)
     })
 
@@ -39,10 +57,7 @@ $(document).ready(function () {
             createSynonymButtons(emotion);
         });
     }
-
     // we will create a function to pass in the word
-    //   var word = emotion
-
     function createSynonymButtons(word) { 
         var queryURL = "http://words.bighugelabs.com/api/2/d49d6cfaa20d4dd74f649fe59a83969e/" + word + "/json";
 
